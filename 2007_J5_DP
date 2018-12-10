@@ -1,0 +1,72 @@
+https://cemc.math.uwaterloo.ca/contests/computing/2007/stage1/juniorEn.pdf
+
+import java.io.*;
+import java.util.*;
+
+public class MyClass {
+    
+    private static ArrayList<Integer> motel = new ArrayList<Integer>();
+    private static int[] ways = new int[1000];
+    private static int min = 970;
+    private static int max= 1030;
+    private static int N = 1;
+    private static int[] dist = {4960};
+
+    private static void init()
+    {
+        motel.add(0);
+        motel.add(990);
+        motel.add(1010);
+        motel.add(1970);
+        motel.add(2030);
+        motel.add(2940);
+        motel.add(3060);
+        motel.add(3930);
+        motel.add(4060);
+        motel.add(4970);
+        motel.add(5030);
+        motel.add(5990);
+        motel.add(6010);
+        motel.add(7000);
+        
+        for(int i=0; i<motel.size(); i++)
+        {
+            if (min<=(int)motel.get(i) && (int)motel.get(i)<=max)
+                ways[i] = 1;
+            else
+                ways[i] = 0;
+            
+        }
+    }
+    
+    public static void main(String args[]) {
+        
+        init();
+        for(int i=0; i<N; i++)
+        {
+            motel.add(dist[i]);
+        }
+        
+        Collections.sort(motel);
+        
+        for(int i=1; i<motel.size()-1; i++)
+        {
+            if (ways[i]==0)
+                continue;
+                
+            for(int j=i+1; j<motel.size(); j++)
+            {
+                int traveled = (int)motel.get(j)-(int)motel.get(i);
+                
+                if (min<=traveled && traveled<=max)
+                {
+                    //System.out.println("m"+i+"="+ways[i]+" traveled="+traveled+" m"+j+"="+(ways[j]+ways[i]));
+                    ways[j] += ways[i];
+                }
+                
+            }
+        }
+        
+        System.out.println(ways[motel.size()-1]);
+    }
+}
