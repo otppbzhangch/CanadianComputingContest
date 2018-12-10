@@ -1,0 +1,62 @@
+import java.io.*;
+import java.util.*;
+
+public class MyClass {
+    
+    private static ArrayList<Integer> motel = new ArrayList<Integer>();
+    private static int min = 970;
+    private static int max= 1040;
+    private static int N = 0;
+    private static int[] dist = {0};
+    private static int numWays = 0;
+    
+    private static void init()
+    {
+        motel.add(0);
+        motel.add(990);
+        motel.add(1010);
+        motel.add(1970);
+        motel.add(2030);
+        motel.add(2940);
+        motel.add(3060);
+        motel.add(3930);
+        motel.add(4060);
+        motel.add(4970);
+        motel.add(5030);
+        motel.add(5990);
+        motel.add(6010);
+        motel.add(7000);
+    }
+    
+    private static int updateNumWays(int distance)
+    {
+        if(distance==7000)
+            return numWays+1;
+            
+        for(int i=0; i<motel.size(); i++)
+        {
+            int length = (int)motel.get(i)-distance;
+            if (min<=length && length<=max)
+            {
+                numWays = updateNumWays((int)motel.get(i));
+            }
+        }
+        return numWays;
+    }
+    
+    public static void main(String args[]) {
+        init();
+        for(int i=0; i<N; i++)
+        {
+            motel.add(dist[i]);
+        }
+        
+        Collections.sort(motel);
+        
+        numWays = updateNumWays(0);
+        
+        System.out.println(numWays);
+    }
+}
+
+
